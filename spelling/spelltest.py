@@ -39,20 +39,50 @@ def spell(str):
 	final_string = str.lower()
 	say(reduce(lambda x, y: x + letter_map[y] + ', ', final_string, "")[:-2])
 
+encouragements = [
+	'Good job!',
+	'Way to go!',
+	'Nice one!',
+	'Awesome!',
+	'Good work!',
+	'Keep it up!',
+	'Excellent!',
+	'Spell-tacular!',
+	]
+
+def encourage():
+	say(random.choice(encouragements))
+
+rewards = [
+	'Go get a Diet Coke!',
+	'Go play Halo Reach!',
+	'Now go take out the recycling!',
+	]
+
+def reward():
+	say(random.choice(rewards))
+
 def spelltest(words, name):
 	random.shuffle(words)
 
 	wrong_words = []
 
+	last_word_wrong = False
 	for word in words:
 		number_guesses = 0
 		while True:
-			say(word)
+			if last_word_wrong:
+				say("Now spell %s" % (word))
+				last_word_wrong = False
+			else:
+				say(word)
 			guess = raw_input("Spell it now (just hit return to say it again): ")
 			if (len(guess) > 0):
 				number_guesses += 1
 
 				if (guess.lower() == word.lower()):
+					encourage()
+					time.sleep(.25)
 					break
 
 				if (number_guesses >= 3):
@@ -68,12 +98,14 @@ def spelltest(words, name):
 
 				time.sleep(0.25)
 
-		if number_guesses > 1:
+		last_word_wrong = number_guesses > 1
+		if last_word_wrong:
 			wrong_words.append(word)
 
 	total_wrong_words = len(wrong_words)
 	if total_wrong_words == 0:
-		say("You rock %s! You spelled all of them right! Go get a Diet Coke!" % (name))
+		say("You rock %s! You spelled all of them right!" % (name))
+		reward()
 	else:
 		print("\nAwesome job %s! But you need to work on:" % (name))
 		say("Awesome job %s! But you need to work on:" % (name))
