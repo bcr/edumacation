@@ -2,8 +2,23 @@ import random
 import subprocess
 import time
 
+raw_letters = "a, bee, see, dee, eee, eff, gee, aych, eye, jay, kay, ell, em, enn, oh, pee, cue, are, esss, tee, you, vee, double you, ecks, why, zee"
+letters = raw_letters.split(', ')
+letter_map = { }
+index = 0
+for letter in letters:
+	letter_map[chr(ord('a') + index)] = letter
+	letter_map[chr(ord('A') + index)] = letter
+	index += 1
+letter_map[' '] = "space"
+
 def say(str):
 	return subprocess.call(['say', str])
+
+def spell(str):
+	# final_string = str.lower()
+	# say(reduce(lambda x, y: x + letters[ord(y) - ord('a')] + ', ', final_string, "")[:-2])
+	say(reduce(lambda x, y: x + letter_map[y] + ', ', str, "")[:-2])
 
 def spelltest(words, name):
 	random.shuffle(words)
@@ -22,9 +37,9 @@ def spelltest(words, name):
 					break
 
 				if (number_guesses >= 3):
-					say("Let's move on. Look how it's spelled")
-					print "\nThe correct spelling is %s\n" % (word)
-					time.sleep(3)
+					say("Let's move on. It's spelled")
+					spell(word)
+					time.sleep(.5)
 					break
 
 				if number_guesses == 1:
