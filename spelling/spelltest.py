@@ -5,7 +5,7 @@ import time
 def say(str):
 	return subprocess.call(['say', str])
 
-def spelltest(words):
+def spelltest(words, name):
 	random.shuffle(words)
 
 	wrong_words = []
@@ -38,8 +38,12 @@ def spelltest(words):
 			wrong_words.append(word)
 
 	if len(wrong_words) == 0:
-		print "You rock! That's all of them right!"
+		say("You rock %s! You spelled all of them right! Go get a Diet Coke!" % (name))
 	else:
-		print "\nGood work -- you missed %d:" % (len(wrong_words))
+		print("\nAwesome job %s! But you need to work on:" % (name))
+		say("Awesome job %s! But you need to work on:" % (name))
 		for word in wrong_words:
-			print "  %s" % (word)
+			time.sleep(0.5)
+			print("  %s" % (word))
+			say(word)
+		print("")

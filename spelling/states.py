@@ -55,4 +55,4 @@ Wyoming
 
 words = raw_states.split('\n')[1:-1]
 
-spelltest.spelltest(words)
+spelltest.spelltest(words, "Ben")
