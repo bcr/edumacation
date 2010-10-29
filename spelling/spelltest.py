@@ -37,13 +37,19 @@ def spelltest(words, name):
 		if number_guesses > 1:
 			wrong_words.append(word)
 
-	if len(wrong_words) == 0:
+	total_wrong_words = len(wrong_words)
+	if total_wrong_words == 0:
 		say("You rock %s! You spelled all of them right! Go get a Diet Coke!" % (name))
 	else:
 		print("\nAwesome job %s! But you need to work on:" % (name))
 		say("Awesome job %s! But you need to work on:" % (name))
+		total_words_read = 0
 		for word in wrong_words:
 			time.sleep(0.5)
 			print("  %s" % (word))
-			say(word)
+			if ((total_words_read > 0) and (total_words_read == (total_wrong_words - 1))):
+				say("and %s" % (word))
+			else:
+				say(word)
+			total_words_read += 1
 		print("")
